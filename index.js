@@ -13,6 +13,8 @@ app.get("/questions", (req, res) =>{
     res.render('questions');
 })
 
+app.get("/save-questions");
+
 app.listen(8080,() =>{
     console.log("App rodando!");
 });
