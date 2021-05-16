@@ -53,7 +53,9 @@ app.get("/singlequestion/:id", (req, res) => {
     where: { id: id }
     }).then(singleQuestion => {
         if(singleQuestion != undefined) {
-            res.render("singleQuestion");
+            res.render("singleQuestion", {
+            singleQuestion: singleQuestion
+        });
         } else {
             res.redirect("/");
         }
