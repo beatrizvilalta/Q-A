@@ -1,8 +1,30 @@
 <%- include('partials/header') %>
 
-<body>
-    <%- include('partials/navbar') %>
-    <h1>Estilo do bootstrap</h1>
-</body>
+    <body>
+        <%- include('partials/navbar') %>
+            <br>
+            <div class="container">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <h1 class="text-center">Questions</h1>
+                    <a href="/questions" class="btn btn-primary">Make a question</a>
+                </div>
+                <hr>
 
-<%- include('partials/footer') %>
+                <%questions.forEach(question=> { %>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>
+                                <%= question.title %>
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success">Aswer</button>
+                        </div>
+                    </div>
+                    <% }) %>
+                <br>
+            </div>
+    </body>
+
+    <%- include('partials/footer') %>

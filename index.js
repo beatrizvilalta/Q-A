@@ -21,13 +21,20 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+
 app.get("/",(req, res) => {
-    res.render('index');
+    Question.findAll({ raw: true, order:[
+    ['id', 'DESC']
+    ]}).then(questions => {
+        res.render('index', {
+            questions: questions
+        });
+    });
 });
 
-app.get("/questions", (req, res) =>{
+app.get("/questions", (req, res) => {
     res.render('questions');
-})
+});
 
 app.post("/save-questions", (req, res) => {
     var title = req.body.title;
@@ -38,6 +45,19 @@ app.post("/save-questions", (req, res) => {
     }). then(() => {
         res.redirect("/");
     })
+});
+
+app.get("/singlequestion/:id", (req, res) => {
+    var id =req.params.id;
+    Question.findOne({
+    where: { id: id }
+    }).then(singleQuestion => {
+        if(singleQuestion != undefined) {
+            res.render("singleQuestion");
+        } else {
+            res.redirect("/");
+        }
+    });
 });
 
 app.listen(8080,() =>{
