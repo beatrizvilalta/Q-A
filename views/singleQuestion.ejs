@@ -5,9 +5,31 @@
             <br>
             <div class="container">
                 <br>
-                <h1><%=singleQuestion.title %></h1>
-                <p><%= singleQuestion.description %></p>
+                <h1>
+                    <%=singleQuestion.title %>
+                </h1>
+                <p>
+                    <%= singleQuestion.description %>
+                </p>
                 <hr>
+                <form method="POST" action="/saveanswer">
+                    <label>Answer:</label>
+                    <textarea name="body" placeholder="Type your answer" class="form-control"></textarea><br>
+                    <input type="hidden" name="questionId" value="<%= singleQuestion.id %>">
+                    <button type="submit" class="btn btn-success">Answer</button>
+                </form>
+                <hr>
+                <h3>Answers</h3>
+                <hr>
+                <% answers.forEach(answer=> { %>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <p><%= answer.body %></p>
+                        </div>
+                    </div>
+                <%})%>
+
             </div>
     </body>
 

@@ -44,24 +44,44 @@ app.post("/save-questions", (req, res) => {
     Question.create({
         title: title,
         description: description
-    }). then(() => {
+    }).then(() => {
         res.redirect("/");
     })
 });
 
 app.get("/singlequestion/:id", (req, res) => {
     var id =req.params.id;
+
     Question.findOne({
     where: { id: id }
     }).then(singleQuestion => {
         if(singleQuestion != undefined) {
-            res.render("singleQuestion", {
-            singleQuestion: singleQuestion
+            Answer.findAll({
+                where: {questionId: singleQuestion.id},
+                order: [['id', 'DESC']]
+            }).then(answers => {
+                res.render("singleQuestion", {
+                singleQuestion: singleQuestion,
+                answers: answers
+            });
         });
         } else {
             res.redirect("/");
         }
     });
+});
+
+app.post("/saveanswer", (req, res) => {
+    var body = req.body.body;
+    var questionId = req.body.questionId;
+
+    Answer.create({
+        body: body,
+        questionId: questionId
+    }).then(() => {
+        console.log("created");
+        res.redirect("/singlequestion/" + questionId);
+    })
 });
 
 app.listen(8080,() =>{
